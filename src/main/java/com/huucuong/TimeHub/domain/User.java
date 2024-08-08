@@ -1,16 +1,24 @@
 package com.huucuong.TimeHub.domain;
 
-import java.util.Date;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "user")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String email;
 
     private String password;
 
-    private String fullname;
+    private String fullName;
 
     private String phone;
 
@@ -45,11 +53,11 @@ public class User {
     }
 
     public String getFullname() {
-        return fullname;
+        return fullName;
     }
 
     public void setFullname(String fullname) {
-        this.fullname = fullname;
+        this.fullName = fullname;
     }
 
     public String getPhone() {
@@ -86,7 +94,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullname=" + fullname + ", phone="
+        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullname=" + fullName + ", phone="
                 + phone + ", facebookAccountId=" + facebookAccountId + ", gmailAccountId=" + gmailAccountId + "]";
     }
 
