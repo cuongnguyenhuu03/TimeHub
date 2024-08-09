@@ -1,6 +1,7 @@
 package com.huucuong.TimeHub.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,6 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public String handleHello() {
-        return "Hello";
-    }
-
     public List<User> getAllUser() {
         return this.userRepository.findAll();
     }
@@ -30,5 +27,15 @@ public class UserService {
 
     public User handleSaveUser(User user) {
         return this.userRepository.save(user);
+    }
+
+    public User findUserById(Long id) {
+        Optional<User> user = this.userRepository.findById(id);
+        return user.orElse(null);
+    }
+
+    public void deleteUser(Long id) {
+        Optional<User> optionalUser = this.userRepository.findById(id);
+        optionalUser.ifPresent(userRepository::delete);
     }
 }
