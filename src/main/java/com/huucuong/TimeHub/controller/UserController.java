@@ -83,9 +83,8 @@ public class UserController {
         User currentUser = this.userService.findUserById(user.getId());
         if (currentUser != null) {
             currentUser.setAddress(user.getAddress());
-            currentUser.setFullname(user.getFullname());
+            currentUser.setFullName(user.getFullName());
             currentUser.setPhone(user.getPhone());
-
             this.userService.handleSaveUser(currentUser);
         }
         return "redirect:/admin/user";

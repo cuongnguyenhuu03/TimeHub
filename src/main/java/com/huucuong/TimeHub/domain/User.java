@@ -1,5 +1,6 @@
 package com.huucuong.TimeHub.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,22 +19,39 @@ public class User {
 
     private String password;
 
+    @Column(name = "full_name")
     private String fullName;
 
     private String phone;
 
     private String address;
 
+    @Column(name = "facebook_account_id")
     private long facebookAccountId;
 
+    @Column(name = "gmail_account_id")
     private long gmailAccountId;
+
+    private String avatar;
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getEmail() {
@@ -50,14 +68,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getFullname() {
-        return fullName;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullName = fullname;
     }
 
     public String getPhone() {
@@ -94,8 +104,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullname=" + fullName + ", phone="
-                + phone + ", facebookAccountId=" + facebookAccountId + ", gmailAccountId=" + gmailAccountId + "]";
+        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName + ", phone="
+                + phone + ", address=" + address + ", facebookAccountId=" + facebookAccountId + ", gmailAccountId="
+                + gmailAccountId + ", avatar=" + avatar + "]";
     }
 
 }
