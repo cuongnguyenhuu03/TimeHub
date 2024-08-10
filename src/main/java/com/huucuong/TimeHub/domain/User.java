@@ -29,6 +29,10 @@ public class User extends Base {
     @Column(name = "facebook_account_id")
     private long facebookAccountId;
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Column(name = "gmail_account_id")
     private long gmailAccountId;
 

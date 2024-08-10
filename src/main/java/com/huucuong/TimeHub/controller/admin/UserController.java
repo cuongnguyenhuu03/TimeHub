@@ -1,4 +1,4 @@
-package com.huucuong.TimeHub.controller;
+package com.huucuong.TimeHub.controller.admin;
 
 import com.huucuong.TimeHub.domain.User;
 import com.huucuong.TimeHub.service.UserService;
@@ -40,7 +40,7 @@ public class UserController {
         }
         List<User> users = this.userService.getAllUser();
         model.addAttribute("users", users);
-        return "admin/user/list-user";
+        return "admin/user/show";
     }
 
     @GetMapping("/admin/user/create")
@@ -60,11 +60,10 @@ public class UserController {
     @GetMapping("/admin/user/{id}")
     public String getUserDetailPage(
             Model model,
-            @ModelAttribute("newUser") User newUser,
             @PathVariable("id") Long id) {
         User user = this.userService.findUserById(id);
         model.addAttribute("user", user);
-        return "admin/user/user-detail";
+        return "admin/user/detail";
     }
 
     @GetMapping("/admin/user/update/{id}")
@@ -79,13 +78,13 @@ public class UserController {
     @PostMapping("/admin/user/update")
     public String UpdateUser(
             Model model,
-            @ModelAttribute("updateUser") User user) {
-        User currentUser = this.userService.findUserById(user.getId());
-        if (currentUser != null) {
-            currentUser.setAddress(user.getAddress());
-            currentUser.setFullName(user.getFullName());
-            currentUser.setPhone(user.getPhone());
-            this.userService.handleSaveUser(currentUser);
+            @ModelAttribute("currentUser") User user) {
+        User updateUser = this.userService.findUserById(user.getId());
+        if (updateUser != null) {
+            updateUser.setAddress(user.getAddress());
+            updateUser.setFullName(user.getFullName());
+            updateUser.setPhone(user.getPhone());
+            this.userService.handleSaveUser(updateUser);
         }
         return "redirect:/admin/user";
     }
