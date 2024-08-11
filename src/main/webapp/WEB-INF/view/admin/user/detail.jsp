@@ -32,17 +32,38 @@
                                             <h3>User detail</h3>
                                         </div>
                                         <hr />
-                                        <div class="card" style="width: 60%;">
-                                            <div class="card-header">
-                                                User Infomation
+                                        <div class="row">
+                                            <div class="avt mb-5 col-12 col-md-4 col-lg-3">
+                                                <img style="width: 100%;" src="/images/avatar/${user.avatar}" ;
+                                                    class="rounded mx-auto d-block" alt="">
                                             </div>
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">ID: ${user.id}</li>
-                                                <li class="list-group-item">Email: ${user.email}</li>
-                                                <li class="list-group-item">Full Name: ${user.fullName}</li>
-                                                <li class="list-group-item">Address: ${user.address}</li>
-                                            </ul>
+                                            <div class="col-12 col-md-8 col-lg-6">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        User Infomation
+                                                    </div>
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item"><strong>ID:</strong> ${user.id}</li>
+                                                        <li class="list-group-item"><strong>Role:</strong>
+                                                            ${user.role.name}
+                                                        <li class="list-group-item"><strong>Phone Number:</strong>
+                                                            ${user.phone}
+                                                        <li class="list-group-item"><strong>Email:</strong>
+                                                            ${user.email}
+                                                        </li>
+                                                        <li class="list-group-item"><strong>Full Name:</strong>
+                                                            ${user.fullName}
+                                                        </li>
+
+                                                        <li class="list-group-item"><strong>Address:</strong>
+                                                            ${user.address}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
                                         </div>
+
                                         <a href="/admin/user" class="btn btn-success mt-3">Back</a>
                                     </div>
                                 </div>

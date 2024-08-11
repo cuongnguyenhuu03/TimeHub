@@ -12,6 +12,21 @@
                 <title>Dashboard - SB Admin</title>
                 <link rel="stylesheet" href="/css/style.css">
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script>
+
+                    // preview avatar
+                    $(document).ready(() => {
+                        const avatarUpdateFile = $("#avatarUpdateFile");
+                        console.log(avatarUpdateFile);
+
+                        avatarUpdateFile.on("change", function (e) {
+                            const imgURL = URL.createObjectURL(e.target.files[0]);
+                            $("#avatarUpdatePreview").attr("src", imgURL);
+                        });
+                    });
+                </script>
             </head>
 
             <body class="sb-nav-fixed">
@@ -31,31 +46,42 @@
                                         <h3>Upadte a user</h3>
                                         <hr />
                                         <form:form method="post" action="/admin/user/update"
-                                            modelAttribute="currentUser">
-                                            <div class="mb-3" style="display: none;">
+                                            modelAttribute="currentUser" class="row" enctype="multipart/form-data">
+                                            <div class="mb-3 col-12 col-md-6" style="display: none;">
                                                 <label class="form-label">ID</label>
                                                 <form:input type="text" class="form-control" path="id" value="${id}" />
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 col-12 col-md-12">
                                                 <label class="form-label">Email:</label>
                                                 <form:input type="email" class="form-control" path="email"
                                                     disabled="true" />
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Phone number:</label>
                                                 <form:input type="text" class="form-control" path="phone" />
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Full Name:</label>
                                                 <form:input type="text" class="form-control" path="fullName" />
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 col-12 col-md-12">
                                                 <label class="form-label">Address:</label>
                                                 <form:input type="text" class="form-control" path="address" />
                                             </div>
+
+                                            <div class="mb-3 col-12 col-md-6">
+                                                <label for="avatarUpdateFile" class="form-label">Avatar</label>
+                                                <input class="form-control" type="file" id="avatarUpdateFile"
+                                                    accept=".png, .jpg, .jpeg" name="avatarUpdateFile" />
+                                            </div>
+
+                                            <div class="col-12 mb-3">
+                                                <img style="max-height: 250px;" alt="avatar preview"
+                                                    src="/images/avatar/${currentUser.avatar}" id="avatarUpdatePreview">
+                                            </div>
                                             <hr />
-                                            <a href="/admin/user" class="btn btn-success">Back</a>
-                                            <button type="submit" class="btn btn-warning">Update</button>
+                                            <!-- <a href="/admin/user" class="btn btn-success">Back</a> -->
+                                            <button type="submit" class="btn btn-warning mt-3">Update</button>
                                         </form:form>
                                     </div>
 

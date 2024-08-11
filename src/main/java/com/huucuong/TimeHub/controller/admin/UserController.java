@@ -6,21 +6,16 @@ import com.huucuong.TimeHub.service.IRoleService;
 import com.huucuong.TimeHub.service.IUploadService;
 import com.huucuong.TimeHub.service.IUserService;
 import com.huucuong.TimeHub.service.impl.RoleService;
-import com.huucuong.TimeHub.service.impl.UploadService;
 import com.huucuong.TimeHub.service.impl.UserService;
 import com.huucuong.TimeHub.util.MessageUtil;
-
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,16 +33,19 @@ public class UserController {
     private final IRoleService roleService;
     private final MessageUtil messageUtil;
     private final IUploadService uploadService;
+    PasswordEncoder passwordEncoder;
 
     public UserController(
             UserService userService,
             RoleService roleService,
             IUploadService uploadService,
-            MessageUtil messageUtil) {
+            MessageUtil messageUtil,
+            PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
         this.messageUtil = messageUtil;
         this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/admin/user")
@@ -77,8 +75,13 @@ public class UserController {
             Model model,
             @ModelAttribute("newUser") User newUser,
             @RequestParam("avatarFile") MultipartFile avatarFile) {
-        this.uploadService.handleSaveFile(avatarFile, "avatar");
-        // this.userService.handleSaveUser(newUser);
+        String avatar = this.uploadService.handleSaveFile(avatarFile, "avatar");
+        String hashPassword = this.passwordEncoder.encode(newUser.getPassword());
+
+        newUser.setAvatar(avatar);
+        newUser.setPassword(hashPassword);
+        this.userService.handleSaveUser(newUser);
+
         return "redirect:/admin/user";
     }
 
@@ -103,9 +106,13 @@ public class UserController {
     @PostMapping("/admin/user/update")
     public String UpdateUser(
             Model model,
-            @ModelAttribute("currentUser") User user) {
+            @ModelAttribute("currentUser") User user,
+            @RequestParam("avatarUpdateFile") MultipartFile avatarUpdateFile) {
         User updateUser = this.userService.findUserById(user.getId());
         if (updateUser != null) {
+            String avatar = this.uploadService.handleSaveFile(avatarUpdateFile, "avatar");
+
+            updateUser.setAvatar(avatar);
             updateUser.setAddress(user.getAddress());
             updateUser.setFullName(user.getFullName());
             updateUser.setPhone(user.getPhone());
