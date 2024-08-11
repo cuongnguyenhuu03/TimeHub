@@ -43,7 +43,7 @@
                                         <h3>Create a user</h3>
                                         <hr />
                                         <form:form method="post" action="/admin/user/create" modelAttribute="newUser"
-                                            class="row">
+                                            class="row" enctype="multipart/form-data">
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Email:</label>
                                                 <form:input type="email" class="form-control" path="email" />
@@ -67,17 +67,18 @@
 
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Role:</label>
-                                                <select class="form-select" aria-label="Default select example">
+                                                <form:select class="form-select" aria-label="Default select example"
+                                                    path="role.id">
                                                     <c:forEach items="${roles}" var="role">
-                                                        <option value="${role.id}">${role.name}</option>
+                                                        <form:option value="${role.id}">${role.name}</form:option>
                                                     </c:forEach>
-                                                </select>
+                                                </form:select>
                                             </div>
 
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label for="avatarFile" class="form-label">Avatar</label>
                                                 <input class="form-control" type="file" id="avatarFile"
-                                                    accept=".png, .jpg, .jpeg">
+                                                    accept=".png, .jpg, .jpeg" name="avatarFile" />
                                             </div>
 
                                             <div class="col-12 mb-3">

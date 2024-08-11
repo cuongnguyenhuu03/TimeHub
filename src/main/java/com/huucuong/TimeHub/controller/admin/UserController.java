@@ -2,12 +2,21 @@ package com.huucuong.TimeHub.controller.admin;
 
 import com.huucuong.TimeHub.domain.Role;
 import com.huucuong.TimeHub.domain.User;
+import com.huucuong.TimeHub.service.IRoleService;
+import com.huucuong.TimeHub.service.IUploadService;
+import com.huucuong.TimeHub.service.IUserService;
 import com.huucuong.TimeHub.service.impl.RoleService;
+import com.huucuong.TimeHub.service.impl.UploadService;
 import com.huucuong.TimeHub.service.impl.UserService;
 import com.huucuong.TimeHub.util.MessageUtil;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -19,21 +28,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class UserController {
 
-    private final UserService userService;
-    private final RoleService roleService;
+    private final IUserService userService;
+    private final IRoleService roleService;
     private final MessageUtil messageUtil;
+    private final IUploadService uploadService;
 
     public UserController(
             UserService userService,
             RoleService roleService,
+            IUploadService uploadService,
             MessageUtil messageUtil) {
         this.userService = userService;
         this.roleService = roleService;
         this.messageUtil = messageUtil;
+        this.uploadService = uploadService;
     }
 
     @GetMapping("/admin/user")
@@ -61,8 +75,10 @@ public class UserController {
     @PostMapping("/admin/user/create")
     public String createUser(
             Model model,
-            @ModelAttribute("newUser") User newUser) {
-        this.userService.handleSaveUser(newUser);
+            @ModelAttribute("newUser") User newUser,
+            @RequestParam("avatarFile") MultipartFile avatarFile) {
+        this.uploadService.handleSaveFile(avatarFile, "avatar");
+        // this.userService.handleSaveUser(newUser);
         return "redirect:/admin/user";
     }
 

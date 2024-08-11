@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,14 +31,18 @@ public class User extends Base {
     @Column(name = "facebook_account_id")
     private long facebookAccountId;
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     @Column(name = "gmail_account_id")
     private long gmailAccountId;
 
     private String avatar;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getId() {
         return id;
@@ -64,6 +70,14 @@ public class User extends Base {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getPassword() {
@@ -112,5 +126,4 @@ public class User extends Base {
                 + phone + ", address=" + address + ", facebookAccountId=" + facebookAccountId + ", gmailAccountId="
                 + gmailAccountId + ", avatar=" + avatar + "]";
     }
-
 }
