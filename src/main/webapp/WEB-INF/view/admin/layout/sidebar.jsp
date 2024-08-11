@@ -7,10 +7,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
-                <a class="nav-link" href="/admin/user">
-                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    User
-                </a>
+
                 <a class="nav-link" href="/admin/product">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Product
@@ -18,6 +15,16 @@
                 <a class="nav-link" href="/admin/order">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Order
+                </a>
+
+                <a class="nav-link" href="#">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Blog
+                </a>
+
+                <a class="nav-link" href="/admin/user">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    User
                 </a>
             </div>
         </div>

@@ -1,7 +1,9 @@
 package com.huucuong.TimeHub.controller.admin;
 
+import com.huucuong.TimeHub.domain.Role;
 import com.huucuong.TimeHub.domain.User;
-import com.huucuong.TimeHub.service.UserService;
+import com.huucuong.TimeHub.service.impl.RoleService;
+import com.huucuong.TimeHub.service.impl.UserService;
 import com.huucuong.TimeHub.util.MessageUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,10 +24,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
     private final MessageUtil messageUtil;
 
-    public UserController(UserService userService, MessageUtil messageUtil) {
+    public UserController(
+            UserService userService,
+            RoleService roleService,
+            MessageUtil messageUtil) {
         this.userService = userService;
+        this.roleService = roleService;
         this.messageUtil = messageUtil;
     }
 
@@ -45,7 +52,9 @@ public class UserController {
 
     @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {
+        List<Role> roles = roleService.findAll();
         model.addAttribute("newUser", new User());
+        model.addAttribute("roles", roles);
         return "admin/user/create";
     }
 
