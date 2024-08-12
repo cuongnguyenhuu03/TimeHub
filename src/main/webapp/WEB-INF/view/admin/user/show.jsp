@@ -42,8 +42,8 @@
                 <!-- notification-toast -->
                 <script src="/template/notification-toast/toast-plugin.js"></script>
                 <link rel="stylesheet" href="/template/notification-toast/styles.css">
-                <link rel="stylesheet" href="/css/style.css">
-                <script src="/js/script.js"></script>
+                <link rel="stylesheet" href="/admin/css/style.css">
+                <script src="/admin/js/script.js"></script>
             </head>
 
             <body class="sb-nav-fixed">

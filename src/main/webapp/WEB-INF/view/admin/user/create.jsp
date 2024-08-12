@@ -9,7 +9,7 @@
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <title>Dashboard - SB Admin</title>
-                <link rel="stylesheet" href="/css/style.css">
+                <link rel="stylesheet" href="/admin/css/style.css">
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
                 <script>
@@ -18,6 +18,8 @@
                     $(document).ready(() => {
                         const avatarFile = $("#avatarFile");
                         avatarFile.change(function (e) {
+                            var container = document.getElementById('avatarPreviewBox');
+                            container.style.border = '1px solid #c6c4c4';
                             const imgURL = URL.createObjectURL(e.target.files[0]);
                             $("#avatarPreview").attr("src", imgURL);
                             $("#avatarPreview").css({ "display": "block" });
@@ -81,9 +83,11 @@
                                                     accept=".png, .jpg, .jpeg" name="avatarFile" />
                                             </div>
 
-                                            <div class="col-12 mb-3">
-                                                <img style="max-height: 250px; display: none;" alt="avatar preview"
-                                                    id="avatarPreview">
+                                            <div class="col-12 mb-3 mt-3">
+                                                <div id="avatarPreviewBox" style="border-radius: 5px;">
+                                                    <img style=" max-height: 140px; display: none; border-radius: 5px; margin: 10px;"
+                                                        alt="avatar preview" id="avatarPreview">
+                                                </div>
                                             </div>
                                             <hr />
                                             <button type="submit" class="btn btn-primary mt-2">Create</button>
@@ -100,7 +104,7 @@
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                     crossorigin="anonymous"></script>
-                <script src="/js/script.js"></script>
+                <script src="/admin/js/script.js"></script>
             </body>
 
             </html>
