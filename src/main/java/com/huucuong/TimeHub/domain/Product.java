@@ -13,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
@@ -21,6 +23,8 @@ public class Product extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "name is required")
+    @Size(min = 3)
     @Column(name = "name", nullable = false, length = 350)
     private String name;
 
@@ -46,8 +50,8 @@ public class Product extends Base {
     @Column(name = "sold")
     private Long sold;
 
-    @Column(name = "target")
-    private Long target;
+    @Column(name = "origin")
+    private String origin;
 
     public Long getId() {
         return id;
@@ -117,19 +121,22 @@ public class Product extends Base {
         this.sold = sold;
     }
 
-    public Long getTarget() {
-        return target;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setTarget(Long target) {
-        this.target = target;
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     @Override
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description
-                + ", shortDescription=" + shortDescription + ", category=" + category + ", productImages="
-                + productImages + ", quantity=" + quantity + ", sold=" + sold + ", target=" + target + "]";
+                + ", shortDescription=" + shortDescription + ", category=" + category + ", quantity=" + quantity
+                + ", sold=" + sold + ", origin=" + origin + "]";
     }
-
 }

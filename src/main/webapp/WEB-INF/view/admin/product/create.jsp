@@ -56,7 +56,7 @@
                                     <div class="col-md-6 col-12 mx-auto">
                                         <h3>Create a product</h3>
                                         <hr />
-                                        <form:form method="post" action="/admin/user/create" modelAttribute="product"
+                                        <form:form method="post" action="/admin/product/create" modelAttribute="product"
                                             class="row" enctype="multipart/form-data">
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Name:</label>
@@ -64,7 +64,7 @@
                                             </div>
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Price:</label>
-                                                <form:input type="text" class="form-control" path="price" />
+                                                <form:input type="number" class="form-control" path="price" />
                                             </div>
                                             <div class="mb-3 col-12 col-md-12">
                                                 <label class="form-label">Short Description</label>
@@ -81,18 +81,23 @@
                                             </div>
 
                                             <div class="mb-3 col-12 col-md-6">
-                                                <label class="form-label">Target:</label>
-                                                <form:input type="text" class="form-control" path="target" />
+                                                <label class="form-label">Origin:</label>
+                                                <form:select class="form-select" aria-label="Default select example"
+                                                    path="origin">
+                                                    <option value="switzerland">Switzerland</option>
+                                                    <option value="japan">Japan</option>
+                                                    <option value="germany">Germany</option>
+                                                    <option value="usa">USA</option>
+                                                </form:select>
                                             </div>
 
                                             <div class="mb-3 col-12 col-md-6">
                                                 <label class="form-label">Category:</label>
                                                 <form:select class="form-select" aria-label="Default select example"
-                                                    path="category">
-                                                    <option selected>select category </option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    path="category.id">
+                                                    <c:forEach items="${categories}" var="category">
+                                                        <option value="${category.id}">${category.name}</option>
+                                                    </c:forEach>
                                                 </form:select>
                                             </div>
 
