@@ -9,6 +9,7 @@ import com.huucuong.TimeHub.service.impl.RoleService;
 import com.huucuong.TimeHub.service.impl.UserService;
 import com.huucuong.TimeHub.util.MessageUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -72,11 +75,22 @@ public class UserController {
     @PostMapping("/admin/user/create")
     public String createUser(
             Model model,
-            @ModelAttribute("newUser") User newUser,
+            @ModelAttribute("newUser") @Valid User newUser,
+            BindingResult newUserBindingResult,
             @RequestParam("avatarFile") MultipartFile avatarFile) {
+        // validate
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+        if (newUserBindingResult.hasErrors()) {
+            List<Role> roles = roleService.findAll();
+            model.addAttribute("roles", roles);
+            return "/admin/user/create";
+        }
+
         String avatar = this.uploadService.handleSaveFile(avatarFile, "avatar");
         String hashPassword = this.passwordEncoder.encode(newUser.getPassword());
-
         newUser.setAvatar(avatar);
         newUser.setPassword(hashPassword);
         this.userService.handleSaveUser(newUser);

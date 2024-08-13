@@ -8,6 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "user")
@@ -17,15 +20,20 @@ public class User extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[azA-Z0-9.-]+$")
     private String email;
 
+    @Size(min = 3, max = 250, message = "The password must be between 3 and 250 characters")
     private String password;
 
+    @Size(min = 3, max = 50, message = "The full name must be between 3 and 50 characters")
     @Column(name = "full_name")
     private String fullName;
 
+    @Size(min = 10, max = 20, message = "The phone number must be between 10 and 20 characters")
     private String phone;
 
+    @Size(min = 3, max = 50, message = "The address must be between 3 and 50 characters")
     private String address;
 
     @Column(name = "facebook_account_id")

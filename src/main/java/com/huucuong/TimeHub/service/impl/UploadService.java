@@ -22,6 +22,9 @@ public class UploadService implements IUploadService {
 
     @Override
     public String handleSaveFile(MultipartFile file, String targetFolder) {
+        if (file.isEmpty()) {
+            return "";
+        }
         String finalName = "";
         try {
             byte[] bytes = file.getBytes();
