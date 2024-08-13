@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.huucuong.TimeHub.domain.Category;
 import com.huucuong.TimeHub.domain.Product;
 import com.huucuong.TimeHub.domain.ProductImage;
-import com.huucuong.TimeHub.domain.Role;
+import com.huucuong.TimeHub.service.ICategoryService;
 import com.huucuong.TimeHub.service.IUploadService;
 import com.huucuong.TimeHub.service.impl.CategoryService;
 import com.huucuong.TimeHub.service.impl.ProductImageService;
@@ -32,7 +32,8 @@ public class ProductController {
     private final ProductImageService productImageService;
     private final ProductService productService;
 
-    public ProductController(CategoryService categoryService,
+    public ProductController(
+            CategoryService categoryService,
             IUploadService uploadService,
             ProductImageService productImageService,
             ProductService productService) {
@@ -70,6 +71,8 @@ public class ProductController {
             System.out.println(error.getField() + " - " + error.getDefaultMessage());
         }
         if (newProductBindingResult.hasErrors()) {
+            List<Category> categories = this.categoryService.findAll();
+            model.addAttribute("categories", categories);
             return "/admin/product/create";
         }
         List<ProductImage> imageFiles = new ArrayList<>();

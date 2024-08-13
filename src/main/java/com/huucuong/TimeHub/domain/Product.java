@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -24,16 +25,22 @@ public class Product extends Base {
     private Long id;
 
     @NotNull(message = "name is required")
-    @Size(min = 3)
+    @Size(min = 3, max = 100, message = "Invalid product name")
     @Column(name = "name", nullable = false, length = 350)
     private String name;
 
+    @NotNull(message = "price is required")
+    @Min(value = 0, message = "The price must be greater than or equal to 0")
     @Column(name = "price")
     private Float price;
 
+    @NotNull(message = "description is required")
+    @Size(min = 3, max = 10000, message = "Invalid description")
     @Column(name = "description")
     private String description;
 
+    @NotNull(message = "short description is required")
+    @Size(min = 3, max = 500, message = "Invalid short description")
     @Column(name = "short_description")
     private String shortDescription;
 
@@ -44,6 +51,8 @@ public class Product extends Base {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImage> productImages;
 
+    @NotNull(message = "quantity is required")
+    @Min(value = 0, message = "The quantity of product must be greater than or equal to 0")
     @Column(name = "quantity")
     private Long quantity;
 
