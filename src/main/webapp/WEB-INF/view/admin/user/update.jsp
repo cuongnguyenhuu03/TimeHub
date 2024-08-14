@@ -76,8 +76,12 @@
                                             </div>
 
                                             <div class="col-12 mb-3">
-                                                <img style="max-height: 250px;" alt="avatar preview"
-                                                    src="/images/avatar/${currentUser.avatar}" id="avatarUpdatePreview">
+                                                <div id="avatarPreviewBox"
+                                                    style="border-radius: 5px; border: 1px solid #c6c4c4">
+                                                    <img style="max-height: 140px; border-radius: 5px; margin: 10px; ;"
+                                                        alt="avatar preview" src="/images/avatar/${currentUser.avatar}"
+                                                        id="avatarUpdatePreview">
+                                                </div>
                                             </div>
                                             <hr />
                                             <!-- <a href="/admin/user" class="btn btn-success">Back</a> -->

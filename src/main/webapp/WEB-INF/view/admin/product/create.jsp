@@ -83,7 +83,7 @@
                                                     <form:errors path="shortDescription" />
                                                 </c:set>
                                                 <label class="form-label">Short Description</label>
-                                                <form:input type="text"
+                                                <form:textarea type="text"
                                                     class="form-control ${not empty shortDescriptionError? 'is-invalid':''}"
                                                     path="shortDescription" />
                                                 <form:errors path="shortDescription" cssClass="invalid-feedback" />
@@ -93,7 +93,7 @@
                                                     <form:errors path="description" />
                                                 </c:set>
                                                 <label class="form-label">Description</label>
-                                                <form:input type="text"
+                                                <form:textarea type="text"
                                                     class="form-control ${not empty descriptionError? 'is-invalid':''}"
                                                     path="description" />
                                                 <form:errors path="description" cssClass="invalid-feedback" />

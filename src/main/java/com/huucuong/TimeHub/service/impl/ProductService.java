@@ -1,6 +1,7 @@
 package com.huucuong.TimeHub.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -27,4 +28,14 @@ public class ProductService implements IProductService {
         return this.productRepository.save(product);
     }
 
+    @Override
+    public Product findProductById(Long id) {
+        Optional<Product> product = this.productRepository.findById(id);
+        return product.orElse(null);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        this.productRepository.deleteById(id);
+    }
 }

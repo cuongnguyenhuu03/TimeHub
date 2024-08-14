@@ -36,13 +36,16 @@ public class Product extends Base {
 
     @NotNull(message = "description is required")
     @Size(min = 3, max = 10000, message = "Invalid description")
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     private String description;
 
     @NotNull(message = "short description is required")
     @Size(min = 3, max = 500, message = "Invalid short description")
-    @Column(name = "short_description")
+    @Column(name = "short_description", columnDefinition = "MEDIUMTEXT")
     private String shortDescription;
+
+    @Column(name = "thumbnail")
+    private String thumbnail;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -142,10 +145,19 @@ public class Product extends Base {
         this.origin = origin;
     }
 
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     @Override
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description
                 + ", shortDescription=" + shortDescription + ", category=" + category + ", quantity=" + quantity
                 + ", sold=" + sold + ", origin=" + origin + "]";
     }
+
 }

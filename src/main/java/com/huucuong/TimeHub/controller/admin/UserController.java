@@ -124,8 +124,9 @@ public class UserController {
         User updateUser = this.userService.findUserById(user.getId());
         if (updateUser != null) {
             String avatar = this.uploadService.handleSaveFile(avatarUpdateFile, "avatar");
-
-            updateUser.setAvatar(avatar);
+            if (avatar != "") {
+                updateUser.setAvatar(avatar);
+            }
             updateUser.setAddress(user.getAddress());
             updateUser.setFullName(user.getFullName());
             updateUser.setPhone(user.getPhone());
@@ -137,6 +138,6 @@ public class UserController {
     @DeleteMapping("/admin/user/delete/{userId}")
     public ResponseEntity<String> DeleteUser(@PathVariable("userId") Long id) {
         this.userService.deleteUser(id);
-        return ResponseEntity.ok("User deleted successfully");
+        return ResponseEntity.ok("User was deleted successfully");
     }
 }

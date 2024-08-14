@@ -64,7 +64,11 @@
 
                                         </div>
 
-                                        <a href="/admin/user" class="btn btn-success mt-3">Back</a>
+                                        <a href="/admin/user" class="btn btn-success mt-3 mr-3"
+                                            style="width: 90px;">Back</a>
+                                        <a href="/admin/user/update/${user.id}" class="btn btn-warning mt-3 ml-3"
+                                            style="margin-left: 80px !important;">update</a>
+
                                     </div>
                                 </div>
                             </div>

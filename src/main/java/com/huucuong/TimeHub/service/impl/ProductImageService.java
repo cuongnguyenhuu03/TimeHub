@@ -1,5 +1,7 @@
 package com.huucuong.TimeHub.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.huucuong.TimeHub.domain.ProductImage;
@@ -18,6 +20,11 @@ public class ProductImageService implements IProductImageService {
     @Override
     public ProductImage save(ProductImage productImage) {
         return this.productImageRepository.save(productImage);
+    }
+
+    @Override
+    public List<ProductImage> findByProductId(Long id) {
+        return this.productImageRepository.findByProductId(id);
     }
 
 }
