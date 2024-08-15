@@ -25,8 +25,18 @@ public class HomePageController {
         return "client/homepage/show";
     }
 
+    @GetMapping("/login")
+    public String getLoginPage(Model model) {
+        return "auth/login";
+    }
+
+    @GetMapping("/register")
+    public String getRegisterPage(Model model) {
+        return "auth/register";
+    }
+
     @GetMapping("/cart")
-    public String getCartPage() {
+    public String getRegisterPage() {
         return "client/cart/show";
     }
 
