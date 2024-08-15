@@ -27,4 +27,9 @@ public class ProductImageService implements IProductImageService {
         return this.productImageRepository.findByProductId(id);
     }
 
+    @Override
+    public void deleteByProductId(Long id) {
+        this.productImageRepository.deleteByProductId(id);
+    }
+
 }

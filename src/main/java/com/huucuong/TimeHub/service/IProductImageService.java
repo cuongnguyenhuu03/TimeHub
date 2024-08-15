@@ -8,4 +8,6 @@ public interface IProductImageService {
     public ProductImage save(ProductImage productImage);
 
     public List<ProductImage> findByProductId(Long id);
+
+    public void deleteByProductId(Long id);
 }

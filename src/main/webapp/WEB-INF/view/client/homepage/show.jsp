@@ -147,9 +147,22 @@
                                                             </div>
                                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                                                 style="top: 10px; left: 10px;">New</div>
-                                                            <div class="p-4 border border-secondary rounded-bottom">
-                                                                <h4>${product.name}</h4>
-                                                                <p>${product.shortDescription}</p>
+                                                            <div class="p-4 border border-secondary rounded-bottom"
+                                                                style="height: 200px;">
+                                                                <div class=""
+                                                                    style="height: 50px; width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                                    <a href="/product/${product.id}">
+                                                                        <h4
+                                                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                                            ${product.name}</h4>
+                                                                    </a>
+                                                                </div>
+
+                                                                <div class="" style="height: 50px; width: 240px;">
+                                                                    <p
+                                                                        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                                        ${product.shortDescription}</p>
+                                                                </div>
                                                                 <div
                                                                     class="d-flex justify-content-between flex-lg-wrap">
                                                                     <p class="text-dark fs-5 fw-bold mb-0">

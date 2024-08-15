@@ -27,7 +27,9 @@ import com.huucuong.TimeHub.service.impl.ProductService;
 import com.huucuong.TimeHub.util.MessageUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class ProductController {
@@ -138,6 +140,79 @@ public class ProductController {
             @PathVariable("id") Long id) {
         this.productService.deleteProduct(id);
         return ResponseEntity.ok("Product was deleted successfully");
+    }
+
+    @GetMapping("/admin/product/update/{id}")
+    public String getUpdateProductPage(
+            Model model,
+            @PathVariable("id") Long id) {
+        List<ProductImage> productImages = this.productImageService.findByProductId(id);
+        Product product = this.productService.findProductById(id);
+        List<Category> categories = this.categoryService.findAll();
+        model.addAttribute("product", product);
+        model.addAttribute("categories", categories);
+        model.addAttribute("productImages", productImages);
+        return "/admin/product/update";
+    }
+
+    @Transactional
+    @PostMapping("/admin/product/update")
+    public String updateProduct(Model model,
+            @ModelAttribute("product") @Valid Product product,
+            BindingResult newProductBindingResult,
+            @RequestParam("productFiles") MultipartFile[] productFiles) {
+
+        // validate start
+        List<FieldError> errors = newProductBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+        if (newProductBindingResult.hasErrors()) {
+            List<Category> categories = this.categoryService.findAll();
+            model.addAttribute("categories", categories);
+            return "/admin/product/create";
+        }
+        // validate end
+
+        List<ProductImage> imageFiles = new ArrayList<>();
+
+        Product updateProduct = this.productService.findProductById(product.getId());
+        updateProduct.setCategory(product.getCategory());
+        updateProduct.setName(product.getName());
+        updateProduct.setDescription(product.getDescription());
+        updateProduct.setShortDescription(product.getShortDescription());
+        updateProduct.setQuantity(product.getQuantity());
+        updateProduct.setOrigin(product.getOrigin());
+        updateProduct.setPrice(product.getPrice());
+
+        this.productService.save(updateProduct);
+
+        boolean isFirstIteration = true;
+        String thumbnail = "";
+        for (MultipartFile productFile : productFiles) {
+            String fileName = this.uploadService.handleSaveFile(productFile, "product");
+            if (fileName == "") {
+                continue;
+            } else {
+                // Use the first element in productFiles to make the background image
+                if (isFirstIteration) {
+                    thumbnail = fileName;
+                    isFirstIteration = false;
+                }
+                productImageService.deleteByProductId(product.getId());
+                ProductImage productImage = new ProductImage();
+                productImage.setProduct(updateProduct);
+                productImage.setImageUrl(fileName);
+                productImageService.save(productImage);
+                imageFiles.add(productImage);
+            }
+
+        }
+
+        updateProduct.setThumbnail(thumbnail);
+        updateProduct.setProductImages(imageFiles);
+        productService.save(updateProduct);
+        return "redirect:/admin/product";
     }
 
 }
