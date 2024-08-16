@@ -24,12 +24,11 @@ import com.huucuong.TimeHub.service.IUploadService;
 import com.huucuong.TimeHub.service.impl.CategoryService;
 import com.huucuong.TimeHub.service.impl.ProductImageService;
 import com.huucuong.TimeHub.service.impl.ProductService;
-import com.huucuong.TimeHub.util.MessageUtil;
+import com.huucuong.TimeHub.util.message.MessageUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class ProductController {

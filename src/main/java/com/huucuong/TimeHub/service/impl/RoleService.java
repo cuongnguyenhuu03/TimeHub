@@ -22,4 +22,9 @@ public class RoleService implements IRoleService {
         return this.roleRepository.findAll();
     }
 
+    @Override
+    public Role findRoleByName(String role) {
+        return this.roleRepository.findByName(role);
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.huucuong.TimeHub.domain;
 
+import com.huucuong.TimeHub.util.validator.StrongPassword;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +24,7 @@ public class User extends Base {
     @Email(message = "Email is not valid")
     private String email;
 
-    @Size(min = 3, max = 250, message = "The password must be between 3 and 250 characters")
+    @StrongPassword
     private String password;
 
     @Size(min = 3, max = 50, message = "The full name must be between 3 and 50 characters")

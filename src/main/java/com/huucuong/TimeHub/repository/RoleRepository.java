@@ -7,5 +7,5 @@ import com.huucuong.TimeHub.domain.*;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-
+    Role findByName(String role);
 }

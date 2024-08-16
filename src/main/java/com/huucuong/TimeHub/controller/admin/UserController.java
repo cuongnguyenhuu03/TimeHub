@@ -7,7 +7,8 @@ import com.huucuong.TimeHub.service.IUploadService;
 import com.huucuong.TimeHub.service.IUserService;
 import com.huucuong.TimeHub.service.impl.RoleService;
 import com.huucuong.TimeHub.service.impl.UserService;
-import com.huucuong.TimeHub.util.MessageUtil;
+import com.huucuong.TimeHub.util.message.MessageUtil;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 

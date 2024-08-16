@@ -6,4 +6,6 @@ import com.huucuong.TimeHub.domain.Role;
 
 public interface IRoleService {
     List<Role> findAll();
+
+    Role findRoleByName(String role);
 }

@@ -1,4 +1,4 @@
-package com.huucuong.TimeHub.util;
+package com.huucuong.TimeHub.util.message;
 
 import java.util.HashMap;
 import java.util.Map;

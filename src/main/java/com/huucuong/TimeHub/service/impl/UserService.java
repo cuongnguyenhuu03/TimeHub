@@ -44,4 +44,9 @@ public class UserService implements IUserService {
         Optional<User> optionalUser = this.userRepository.findById(id);
         optionalUser.ifPresent(userRepository::delete);
     }
+
+    @Override
+    public boolean checkEmailExist(String email) {
+        return this.userRepository.existsByEmail(email);
+    }
 }
