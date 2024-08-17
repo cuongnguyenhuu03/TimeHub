@@ -2,13 +2,26 @@ package com.huucuong.TimeHub.domain.dto;
 
 import com.huucuong.TimeHub.domain.User;
 import com.huucuong.TimeHub.util.validator.RegisterChecked;
+import com.huucuong.TimeHub.util.validator.StrongPassword;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 
 @RegisterChecked
 public class RegisterDTO {
+
+    @Size(min = 3, max = 20, message = "The full name must be between 3 and 20 characters")
     private String firstName;
+
+    @Size(min = 3, max = 20, message = "The last name must be between 3 and 20 characters")
     private String lastName;
+
+    @Email
     private String email;
+
+    @StrongPassword
     private String password;
+
     private String confirmPassword;
 
     public String getFirstName() {

@@ -40,6 +40,7 @@
                                                                     id="inputFirstName" path="firstName" type="text"
                                                                     placeholder="Enter your first name" />
                                                                 <label for="firstName">First name</label>
+                                                                <form:errors path="firstName" />
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">

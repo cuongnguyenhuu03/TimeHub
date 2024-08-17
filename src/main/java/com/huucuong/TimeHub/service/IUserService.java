@@ -7,8 +7,6 @@ import com.huucuong.TimeHub.domain.User;
 public interface IUserService {
     List<User> getAllUser();
 
-    List<User> getAllUserByEmail(String email);
-
     User handleSaveUser(User user);
 
     User findUserById(Long id);
@@ -16,4 +14,6 @@ public interface IUserService {
     void deleteUser(Long id);
 
     boolean checkEmailExist(String email);
+
+    User findUserByEmail(String email);
 }

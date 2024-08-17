@@ -24,11 +24,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> getAllUserByEmail(String email) {
-        return this.userRepository.findByEmail(email);
-    }
-
-    @Override
     public User handleSaveUser(User user) {
         return this.userRepository.save(user);
     }
@@ -48,5 +43,10 @@ public class UserService implements IUserService {
     @Override
     public boolean checkEmailExist(String email) {
         return this.userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
     }
 }
