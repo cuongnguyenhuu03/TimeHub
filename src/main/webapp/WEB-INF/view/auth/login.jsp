@@ -27,28 +27,34 @@
                                                 <h3 class="text-center font-weight-light my-4">Login</h3>
                                             </div>
                                             <div class="card-body">
-                                                <form>
+                                                <form method="post" action="/login">
+                                                    <c:if test="${param.error != null}">
+                                                        <div class="my-2" style="color: red;">Invalid email or password.
+                                                        </div>
+                                                    </c:if>
+
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" id="inputEmail" type="email"
-                                                            placeholder="name@example.com" />
-                                                        <label for="inputEmail">Email address</label>
+                                                        <input class="form-control" type="email"
+                                                            placeholder="name@example.com" name="username" />
+                                                        <label>Email address</label>
                                                     </div>
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" id="inputPassword" type="password"
-                                                            placeholder="Password" />
-                                                        <label for="inputPassword">Password</label>
+                                                        <input class="form-control" type="password"
+                                                            placeholder="Password" name="password" />
+                                                        <label>Password</label>
                                                     </div>
-                                                    <div class="form-check mb-3">
-                                                        <input class="form-check-input" id="inputRememberPassword"
-                                                            type="checkbox" value="" />
-                                                        <label class="form-check-label"
-                                                            for="inputRememberPassword">Remember
-                                                            Password</label>
+                                                    <div>
+                                                        <input type="hidden" name="${_csrf.parameterName}"
+                                                            value="${_csrf.token}" />
+
                                                     </div>
-                                                    <div
-                                                        class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                        <a class="small" href="password.html">Forgot Password?</a>
-                                                        <a class="btn btn-primary" href="index.html">Login</a>
+
+                                                    <div class="mt-4 mb-0">
+                                                        <div class="d-grid">
+                                                            <button class="btn btn-primary btn-block">
+                                                                Login
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </form>
                                             </div>
