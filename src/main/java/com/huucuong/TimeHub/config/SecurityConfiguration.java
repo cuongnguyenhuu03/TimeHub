@@ -48,7 +48,7 @@ public class SecurityConfiguration {
 
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
-                        .requestMatchers("/login", "/client/**", "/images/**").permitAll()
+                        .requestMatchers("/login", "/client/**", "/admin/**", "/images/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
