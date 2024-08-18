@@ -30,6 +30,11 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="" />
                 <meta name="author" content="" />
+                <!-- csrf token -->
+                <meta name="_csrf" content="${_csrf.token}" />
+                <!-- default header name is X-CSRF-TOKEN -->
+                <meta name="_csrf_header" content="${_csrf.headerName}" />
+
                 <title>Dashboard - SB Admin</title>
 
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -153,9 +158,19 @@
             </html>
 
             <script>
+                // CSRF Variables
+                var _tc = $("meta[name='_csrf']").attr("content");
+                var _hc = $("meta[name='_csrf_header']").attr("content");
+
+                // add CSRF header
+                var headersStomp = {};
+                headersStomp[_hc] = _tc;
+
+                $(document).ajaxSend(function (e, xhr, options) {
+                    xhr.setRequestHeader(_hc, _tc);
+                });
 
                 function deleteUser(userId) {
-
                     $.ajax({
                         url: '/admin/user/delete/' + userId,
                         type: 'DELETE',
