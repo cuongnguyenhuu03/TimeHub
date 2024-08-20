@@ -6,7 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -18,10 +17,11 @@ import com.huucuong.TimeHub.service.IProductService;
 import com.huucuong.TimeHub.service.IRoleService;
 import com.huucuong.TimeHub.service.IUserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class HomePageController {
@@ -43,7 +43,8 @@ public class HomePageController {
     }
 
     @GetMapping("/")
-    public String getHomePage(Model model) {
+    public String getHomePage(
+            Model model) {
         List<Product> products = this.productService.findAll();
         model.addAttribute("products", products);
         return "client/homepage/show";
@@ -84,6 +85,11 @@ public class HomePageController {
     @GetMapping("/cart")
     public String getRegisterPage() {
         return "client/cart/show";
+    }
+
+    @GetMapping("/access-deny")
+    public String getDenyPage() {
+        return "auth/deny";
     }
 
 }
