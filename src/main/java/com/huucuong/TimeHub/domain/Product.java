@@ -65,6 +65,9 @@ public class Product extends Base {
     @Column(name = "origin")
     private String origin;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<CartDetail> cartDetails;
+
     public Long getId() {
         return id;
     }

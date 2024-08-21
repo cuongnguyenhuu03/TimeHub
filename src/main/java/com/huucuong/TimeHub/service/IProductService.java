@@ -13,4 +13,6 @@ public interface IProductService {
 
     public void deleteProduct(Long id);
 
+    public void handleAddProductToCart(String Email, Long productId);
+
 }

@@ -11,6 +11,12 @@ import com.huucuong.TimeHub.domain.*;
 import com.huucuong.TimeHub.service.impl.ProductImageService;
 import com.huucuong.TimeHub.service.impl.ProductService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 @Controller
 public class ItemController {
 
@@ -35,4 +41,15 @@ public class ItemController {
         return "client/product/detail";
 
     }
+
+    @PostMapping("/add-product-to-cart/{id}")
+    public String addProductToCart(HttpServletRequest request, @PathVariable("id") Long id) {
+        HttpSession session = request.getSession(false);
+
+        Long productId = id;
+        String email = (String) session.getAttribute("email");
+        this.productService.handleAddProductToCart(email, id);
+        return "redirect:/";
+    }
+
 }

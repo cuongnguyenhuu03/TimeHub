@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -48,6 +49,9 @@ public class User extends Base {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
 
     public void setId(long id) {
         this.id = id;
@@ -134,5 +138,13 @@ public class User extends Base {
         return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName + ", phone="
                 + phone + ", address=" + address + ", facebookAccountId=" + facebookAccountId + ", gmailAccountId="
                 + gmailAccountId + ", avatar=" + avatar + "]";
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
