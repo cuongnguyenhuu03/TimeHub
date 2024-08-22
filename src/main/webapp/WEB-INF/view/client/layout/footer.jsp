@@ -77,5 +77,5 @@
 </div>
 
 <!-- Back to Top -->
-<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
-        class="fa fa-arrow-up"></i></a>
+<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"
+        style="color: #CBB279;"></i></a>

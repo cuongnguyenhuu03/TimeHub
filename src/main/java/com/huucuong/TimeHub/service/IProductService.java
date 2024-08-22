@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.huucuong.TimeHub.domain.Product;
 
+import jakarta.servlet.http.HttpSession;
+
 public interface IProductService {
     public List<Product> findAll();
 
@@ -13,6 +15,6 @@ public interface IProductService {
 
     public void deleteProduct(Long id);
 
-    public void handleAddProductToCart(String Email, Long productId);
+    public void handleAddProductToCart(String Email, Long productId, HttpSession session);
 
 }
