@@ -1,5 +1,6 @@
 package com.huucuong.TimeHub.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +27,18 @@ public class CartDetailService implements ICartDetailService {
     @Override
     public void deleteCartDetail(Long id) {
         this.cartDetailRepository.deleteById(id);
+    }
+
+    @Override
+    public void handleUpdateBeforeCheckout(List<CartDetail> cartDetails) {
+        for (CartDetail cartDetail : cartDetails) {
+            Optional<CartDetail> cdOptional = this.cartDetailRepository.findById(cartDetail.getId());
+            if (cdOptional.isPresent()) {
+                CartDetail currentCartDetail = cdOptional.get();
+                currentCartDetail.setQuantity(cartDetail.getQuantity());
+                this.cartDetailRepository.save(currentCartDetail);
+            }
+        }
     }
 
 }

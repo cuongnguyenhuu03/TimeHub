@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.huucuong.TimeHub.domain.Cart;
 import com.huucuong.TimeHub.domain.CartDetail;
+import com.huucuong.TimeHub.domain.User;
 import com.huucuong.TimeHub.service.impl.CartDetailService;
 import com.huucuong.TimeHub.service.impl.CartService;
 
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CartController {
@@ -46,6 +49,7 @@ public class CartController {
         }
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("cart", cart);
         return "client/cart/show";
     }
 
@@ -63,6 +67,33 @@ public class CartController {
         session.setAttribute("sum", currentSum);
 
         return "redirect:/cart";
+    }
+
+    @GetMapping("/checkout")
+    public String getCheckoutPage(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        long id = (long) session.getAttribute("id");
+
+        Cart cart = this.cartService.findByUserId(id);
+
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
+
+        double totalPrice = 0;
+        for (CartDetail cd : cartDetails) {
+            totalPrice += cd.getPrice() * cd.getQuantity();
+        }
+
+        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("totalPrice", totalPrice);
+
+        return "client/cart/checkout";
+    }
+
+    @PostMapping("/confirm-checkout")
+    public String getCheckoutPage(@ModelAttribute("cart") Cart cart) {
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
+        this.cartDetailService.handleUpdateBeforeCheckout(cartDetails);
+        return "redirect:/checkout";
     }
 
 }
