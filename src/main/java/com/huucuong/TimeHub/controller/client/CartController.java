@@ -93,6 +93,7 @@ public class CartController {
     public String getCheckoutPage(@ModelAttribute("cart") Cart cart) {
         List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
         this.cartDetailService.handleUpdateBeforeCheckout(cartDetails);
+
         return "redirect:/checkout";
     }
 

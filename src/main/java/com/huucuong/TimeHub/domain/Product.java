@@ -32,7 +32,7 @@ public class Product extends Base {
     @NotNull(message = "price is required")
     @Min(value = 0, message = "The price must be greater than or equal to 0")
     @Column(name = "price")
-    private Float price;
+    private Double price;
 
     @NotNull(message = "description is required")
     @Size(min = 3, max = 10000, message = "Invalid description")
@@ -80,11 +80,11 @@ public class Product extends Base {
         this.name = name;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

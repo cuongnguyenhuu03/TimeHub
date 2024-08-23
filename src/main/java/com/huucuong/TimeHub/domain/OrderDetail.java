@@ -28,13 +28,13 @@ public class OrderDetail extends Base {
     private Product product;
 
     @Column(name = "price", nullable = false)
-    private Float price;
+    private Double price;
 
     @Column(name = "number_of_products", nullable = false)
     private int numberOfProducts;
 
     @Column(name = "total_money", nullable = false)
-    private Float totalMoney;
+    private Double totalMoney;
 
     @Column(name = "color")
     private String color;
@@ -59,11 +59,11 @@ public class OrderDetail extends Base {
         this.product = product;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -75,11 +75,11 @@ public class OrderDetail extends Base {
         this.numberOfProducts = numberOfProducts;
     }
 
-    public Float getTotalMoney() {
+    public Double getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(Float totalMoney) {
+    public void setTotalMoney(Double totalMoney) {
         this.totalMoney = totalMoney;
     }
 
