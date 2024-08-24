@@ -151,7 +151,7 @@ public class ProductController {
         model.addAttribute("product", product);
         model.addAttribute("categories", categories);
         model.addAttribute("productImages", productImages);
-        return "/admin/product/update";
+        return "admin/product/update";
     }
 
     @Transactional

@@ -28,6 +28,12 @@
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <title>Dashboard - SB Admin</title>
+
+                <!-- csrf token -->
+                <meta name="_csrf" content="${_csrf.token}" />
+                <!-- default header name is X-CSRF-TOKEN -->
+                <meta name="_csrf_header" content="${_csrf.headerName}" />
+
                 <link rel="stylesheet" href="/admin/css/style.css">
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
@@ -159,6 +165,19 @@
             </html>
 
             <script>
+
+                // CSRF Variables
+                var _tc = $("meta[name='_csrf']").attr("content");
+                var _hc = $("meta[name='_csrf_header']").attr("content");
+
+                // add CSRF header
+                var headersStomp = {};
+                headersStomp[_hc] = _tc;
+
+                $(document).ajaxSend(function (e, xhr, options) {
+                    xhr.setRequestHeader(_hc, _tc);
+                });
+
                 function deleteProduct(id) {
                     console.log(id);
 
@@ -169,7 +188,7 @@
                             window.location.href = "/admin/product?message=delete_success";
                         },
                         error: function (error) {
-                            window.location.href = "/admin/product?message=delete_false";
+                            //window.location.href = "/admin/product?message=delete_false";
                         }
                     });
 

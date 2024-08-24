@@ -2,8 +2,10 @@ package com.huucuong.TimeHub.service.impl;
 
 import java.util.List;
 
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
+import com.huucuong.TimeHub.constant.OrderStatus;
 import com.huucuong.TimeHub.domain.Cart;
 import com.huucuong.TimeHub.domain.CartDetail;
 import com.huucuong.TimeHub.domain.Order;
@@ -45,17 +47,21 @@ public class OrderService implements IOrderService {
         order.setFullName(receiverName);
         order.setPhoneNumber(receiverPhone);
         order.setAddress(receiverAddress);
+        order.setStatus(OrderStatus.PENDING);
+        order.setPaymentMethod("COD");
 
         order = this.orderRepository.save(order);
 
         // order detail
         Cart cart = this.cartRepository.findByUserId(user.getId());
+        float totalMoney = 0;
         if (cart != null) {
             List<CartDetail> cartDetails = cart.getCartDetails();
 
             if (cartDetails != null) {
                 for (CartDetail cd : cartDetails) {
                     OrderDetail orderDetail = new OrderDetail();
+                    totalMoney += cd.getPrice();
                     orderDetail.setOrder(order);
                     orderDetail.setProduct(cd.getProduct());
                     orderDetail.setPrice(cd.getPrice());
@@ -64,6 +70,8 @@ public class OrderService implements IOrderService {
                     orderDetail.setTotalMoney(cd.getPrice());
                     this.orderDetailRepository.save(orderDetail);
                 }
+
+                order.setTotalMoney(totalMoney);
                 // delete cartdetail
                 for (CartDetail cd : cartDetails) {
                     this.cartDetailRepository.deleteById(cd.getId());
@@ -75,5 +83,38 @@ public class OrderService implements IOrderService {
                 session.setAttribute("sum", 0);
             }
         }
+    }
+
+    @Override
+    public Order findById(Long id) {
+        Optional<Order> order = this.orderRepository.findById(id);
+        return order.get();
+    }
+
+    @Override
+    public List<Order> findAll() {
+        return this.orderRepository.findAll();
+    }
+
+    @Override
+    public List<OrderDetail> findByOrderId(Long id) {
+        return this.orderDetailRepository.findByOrderId(id);
+    }
+
+    @Override
+    public Order save(Order order) {
+        return this.orderRepository.save(order);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.orderRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteOrderDetailByOrderId(Long id) {
+        Order order = new Order();
+        order.setId(id);
+        this.orderDetailRepository.deleteByOrder(order);
     }
 }
