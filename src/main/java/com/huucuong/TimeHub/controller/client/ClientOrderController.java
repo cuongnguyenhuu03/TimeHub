@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.huucuong.TimeHub.domain.Order;
 import com.huucuong.TimeHub.domain.User;
 import com.huucuong.TimeHub.service.impl.OrderService;
 
@@ -31,8 +32,10 @@ public class ClientOrderController {
         User currentUser = new User();
         currentUser.setId(id);
 
-        this.orderService.handlePlaceOrder(currentUser, session, receiverName, receiverAddress, receiverPhone);
-        return "redirect:/thank-you";
+        Order order = this.orderService.handlePlaceOrder(currentUser, session, receiverName, receiverAddress,
+                receiverPhone);
+        Long orderId = order.getId();
+        return "redirect:/generate-bill/" + orderId;
     }
 
     @GetMapping("/thank-you")

@@ -11,15 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.huucuong.TimeHub.domain.Cart;
 import com.huucuong.TimeHub.domain.CartDetail;
-import com.huucuong.TimeHub.domain.User;
 import com.huucuong.TimeHub.service.impl.CartDetailService;
 import com.huucuong.TimeHub.service.impl.CartService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CartController {

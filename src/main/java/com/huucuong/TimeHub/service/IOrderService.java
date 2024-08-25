@@ -9,7 +9,7 @@ import java.util.*;
 import jakarta.servlet.http.HttpSession;
 
 public interface IOrderService {
-    public void handlePlaceOrder(User user, HttpSession session, String receiverName, String receiverAddress,
+    public Order handlePlaceOrder(User user, HttpSession session, String receiverName, String receiverAddress,
             String receiverPhone);
 
     public Order findById(Long id);

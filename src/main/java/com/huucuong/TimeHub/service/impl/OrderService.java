@@ -38,7 +38,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void handlePlaceOrder(User user, HttpSession session, String receiverName, String receiverAddress,
+    public Order handlePlaceOrder(User user, HttpSession session, String receiverName, String receiverAddress,
             String receiverPhone) {
 
         // order
@@ -83,6 +83,7 @@ public class OrderService implements IOrderService {
                 session.setAttribute("sum", 0);
             }
         }
+        return order;
     }
 
     @Override
