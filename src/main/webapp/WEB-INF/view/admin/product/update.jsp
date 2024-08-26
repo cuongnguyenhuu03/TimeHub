@@ -150,7 +150,7 @@
                                                 </div>
                                             </div>
                                             <hr />
-                                            <button type="submit" class="btn btn-primary mt-2">Create</button>
+                                            <button type="submit" class="btn btn-primary mt-2">Update</button>
                                         </form:form>
                                     </div>
 

@@ -72,7 +72,7 @@
                                                         <div class="col-md-6">
                                                             <div class="form-floating mb-3 mb-md-0">
                                                                 <c:set var="errorPassword">
-                                                                    <form:errors path="confirmPassword" />
+                                                                    <form:errors path="password" />
                                                                 </c:set>
                                                                 <form:input
                                                                     class="form-control ${not empty errorPassword? 'is-invalid':''}"

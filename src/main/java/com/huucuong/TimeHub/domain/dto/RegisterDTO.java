@@ -5,6 +5,7 @@ import com.huucuong.TimeHub.util.validator.RegisterChecked;
 import com.huucuong.TimeHub.util.validator.StrongPassword;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @RegisterChecked
@@ -17,6 +18,7 @@ public class RegisterDTO {
     private String lastName;
 
     @Email
+    @NotBlank(message = "Email cannot be blank")
     private String email;
 
     @StrongPassword

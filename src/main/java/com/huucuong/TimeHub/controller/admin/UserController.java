@@ -87,7 +87,7 @@ public class UserController {
         if (newUserBindingResult.hasErrors()) {
             List<Role> roles = roleService.findAll();
             model.addAttribute("roles", roles);
-            return "/admin/user/create";
+            return "admin/user/create";
         }
 
         String avatar = this.uploadService.handleSaveFile(avatarFile, "avatar");

@@ -2,6 +2,7 @@ package com.huucuong.TimeHub.domain;
 
 import com.huucuong.TimeHub.util.validator.StrongPassword;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -23,6 +25,7 @@ public class User extends Base {
     private long id;
 
     @Email(message = "Email is not valid")
+    @NotBlank(message = "Email cannot be blank")
     private String email;
 
     @StrongPassword
@@ -50,7 +53,7 @@ public class User extends Base {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
     public void setId(long id) {

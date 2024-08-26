@@ -91,7 +91,10 @@ public class ProductController {
         if (newProductBindingResult.hasErrors()) {
             List<Category> categories = this.categoryService.findAll();
             model.addAttribute("categories", categories);
-            return "/admin/product/create";
+            return "admin/product/create";
+        }
+        if (productFiles.length > 5) {
+            return "redirect:/admin/product/create?error:limit-5-pics";
         }
         // validate end
         List<ProductImage> imageFiles = new ArrayList<>();
@@ -188,6 +191,7 @@ public class ProductController {
 
         boolean isFirstIteration = true;
         String thumbnail = "";
+        productImageService.deleteByProductId(product.getId());
         for (MultipartFile productFile : productFiles) {
             String fileName = this.uploadService.handleSaveFile(productFile, "product");
             if (fileName == "") {
@@ -198,12 +202,14 @@ public class ProductController {
                     thumbnail = fileName;
                     isFirstIteration = false;
                 }
-                productImageService.deleteByProductId(product.getId());
+
                 ProductImage productImage = new ProductImage();
                 productImage.setProduct(updateProduct);
                 productImage.setImageUrl(fileName);
-                productImageService.save(productImage);
-                imageFiles.add(productImage);
+                ProductImage newProductImage = productImageService.save(productImage);
+                if (newProductImage != null) {
+                    imageFiles.add(productImage);
+                }
             }
 
         }
