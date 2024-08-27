@@ -2,11 +2,12 @@ package com.huucuong.TimeHub.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.huucuong.TimeHub.domain.User;
 
 public interface IUserService {
-    List<User> getAllUser();
-
     User handleSaveUser(User user);
 
     User findUserById(Long id);
@@ -16,4 +17,6 @@ public interface IUserService {
     boolean checkEmailExist(String email);
 
     User findUserByEmail(String email);
+
+    Page<User> findAll(Pageable pageable);
 }

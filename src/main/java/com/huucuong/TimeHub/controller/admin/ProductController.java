@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,6 +58,7 @@ public class ProductController {
     @GetMapping("/admin/product")
     public String getProductPage(
             Model model,
+            @RequestParam(defaultValue = "1", name = "page") int page,
             HttpServletRequest request) {
 
         if (request.getParameter("message") != null) {
@@ -63,8 +67,13 @@ public class ProductController {
             model.addAttribute("alert", message.get("alert"));
         }
 
-        List<Product> products = this.productService.findAll();
-        model.addAttribute("products", products);
+        Pageable pageable = PageRequest.of(page - 1, 2);
+
+        Page<Product> pageProducts = this.productService.findAll(pageable);
+        List<Product> listProducts = pageProducts.getContent();
+        model.addAttribute("products", listProducts);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pageProducts.getTotalPages());
         return "admin/product/show";
     }
 
@@ -189,34 +198,38 @@ public class ProductController {
 
         this.productService.save(updateProduct);
 
-        boolean isFirstIteration = true;
-        String thumbnail = "";
-        productImageService.deleteByProductId(product.getId());
-        for (MultipartFile productFile : productFiles) {
-            String fileName = this.uploadService.handleSaveFile(productFile, "product");
-            if (fileName == "") {
-                continue;
-            } else {
-                // Use the first element in productFiles to make the background image
-                if (isFirstIteration) {
-                    thumbnail = fileName;
-                    isFirstIteration = false;
+        if (!productFiles[0].getOriginalFilename().equals("")) {
+            boolean isFirstIteration = true;
+            String thumbnail = "";
+            productImageService.deleteByProductId(product.getId());
+
+            for (MultipartFile productFile : productFiles) {
+                String fileName = this.uploadService.handleSaveFile(productFile, "product");
+                if (fileName == "") {
+                    continue;
+                } else {
+                    // Use the first element in productFiles to make the background image
+                    if (isFirstIteration) {
+                        thumbnail = fileName;
+                        isFirstIteration = false;
+                    }
+
+                    ProductImage productImage = new ProductImage();
+                    productImage.setProduct(updateProduct);
+                    productImage.setImageUrl(fileName);
+                    ProductImage newProductImage = productImageService.save(productImage);
+                    if (newProductImage != null) {
+                        imageFiles.add(productImage);
+                    }
                 }
 
-                ProductImage productImage = new ProductImage();
-                productImage.setProduct(updateProduct);
-                productImage.setImageUrl(fileName);
-                ProductImage newProductImage = productImageService.save(productImage);
-                if (newProductImage != null) {
-                    imageFiles.add(productImage);
-                }
             }
 
+            updateProduct.setThumbnail(thumbnail);
+            updateProduct.setProductImages(imageFiles);
+            productService.save(updateProduct);
         }
 
-        updateProduct.setThumbnail(thumbnail);
-        updateProduct.setProductImages(imageFiles);
-        productService.save(updateProduct);
         return "redirect:/admin/product";
     }
 

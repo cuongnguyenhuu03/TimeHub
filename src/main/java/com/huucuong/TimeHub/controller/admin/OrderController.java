@@ -1,5 +1,8 @@
 package com.huucuong.TimeHub.controller.admin;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.huucuong.TimeHub.util.message.MessageUtil;
 
@@ -37,6 +41,7 @@ public class OrderController {
     @GetMapping("/admin/order")
     public String getOrder(
             Model model,
+            @RequestParam(defaultValue = "1", name = "page") int page,
             HttpServletRequest request) {
 
         if (request.getParameter("message") != null) {
@@ -45,8 +50,13 @@ public class OrderController {
             model.addAttribute("alert", message.get("alert"));
         }
 
-        List<Order> orders = this.orderService.findAll();
+        Pageable pageable = PageRequest.of(page - 1, 5);
+
+        Page<Order> pageOrders = this.orderService.findAll(pageable);
+        List<Order> orders = pageOrders.getContent();
         model.addAttribute("orders", orders);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pageOrders.getTotalPages());
         return "admin/order/show";
     }
 

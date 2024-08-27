@@ -2,6 +2,9 @@ package com.huucuong.TimeHub.controller.client;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomePageController {
@@ -44,8 +48,11 @@ public class HomePageController {
 
     @GetMapping("/")
     public String getHomePage(
-            Model model) {
-        List<Product> products = this.productService.findAll();
+            Model model,
+            @RequestParam(defaultValue = "1", name = "page") int page) {
+        Pageable pageable = PageRequest.of(page - 1, 4);
+        Page<Product> pageProducts = this.productService.findAll(pageable);
+        List<Product> products = pageProducts.getContent();
         model.addAttribute("products", products);
         return "client/homepage/show";
     }

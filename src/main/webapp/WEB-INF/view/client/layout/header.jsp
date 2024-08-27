@@ -29,7 +29,7 @@
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
                             <a href="/" class="nav-item nav-link active">Home</a>
-                            <a href="#" class="nav-item nav-link">Shop</a>
+                            <a href="/products" class="nav-item nav-link">Shop</a>
                             <a href="#" class="nav-item nav-link">Shop Detail</a>
                             <a href="#" class="nav-item nav-link">Contact</a>
                         </div>

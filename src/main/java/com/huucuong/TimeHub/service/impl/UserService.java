@@ -3,6 +3,8 @@ package com.huucuong.TimeHub.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.huucuong.TimeHub.domain.User;
@@ -19,8 +21,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<User> getAllUser() {
-        return this.userRepository.findAll();
+    public Page<User> findAll(Pageable pageable) {
+        return this.userRepository.findAll(pageable);
     }
 
     @Override

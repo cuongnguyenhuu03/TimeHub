@@ -151,16 +151,39 @@
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination justify-content-center">
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Previous">
+                                                    <a class="${1 eq currentPage ? 'disabled page-link' : 'page-link'}"
+                                                        href="/admin/product?page=1" aria-label="Previous">
+                                                        <span aria-hidden="true">first</span>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="${1 eq currentPage ? 'disabled page-link' : 'page-link'}"
+                                                        href="/admin/product?page=${currentPage - 1}"
+                                                        aria-label="Previous">
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </a>
                                                 </li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                                                <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                                                    <li class="page-item">
+                                                        <a class="${(loop.index) eq currentPage ? 'active page-link' : 'page-link'}"
+                                                            href="/admin/product?page=${loop.index}">
+                                                            ${loop.index}
+                                                        </a>
+                                                    </li>
+                                                </c:forEach>
+
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Next">
+                                                    <a class="${totalPages eq currentPage ? 'disabled page-link' : 'page-link'}"
+                                                        href="/admin/product?page=${currentPage + 1}" aria-label="Next">
                                                         <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+
+                                                <li class="page-item">
+                                                    <a class="${totalPages eq currentPage ? 'disabled page-link' : 'page-link'}"
+                                                        href="/admin/product?page=${totalPages}" aria-label="Previous">
+                                                        <span aria-hidden="true">last</span>
                                                     </a>
                                                 </li>
                                             </ul>

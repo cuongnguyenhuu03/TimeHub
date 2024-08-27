@@ -3,6 +3,9 @@ package com.huucuong.TimeHub.service.impl;
 import java.util.List;
 
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.huucuong.TimeHub.constant.OrderStatus;
@@ -93,8 +96,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> findAll() {
-        return this.orderRepository.findAll();
+    public Page<Order> findAll(Pageable pageable) {
+        return this.orderRepository.findAll(pageable);
     }
 
     @Override

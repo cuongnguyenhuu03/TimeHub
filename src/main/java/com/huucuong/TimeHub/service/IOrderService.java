@@ -6,6 +6,9 @@ import com.huucuong.TimeHub.domain.User;
 
 import java.util.*;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import jakarta.servlet.http.HttpSession;
 
 public interface IOrderService {
@@ -14,7 +17,7 @@ public interface IOrderService {
 
     public Order findById(Long id);
 
-    public List<Order> findAll();
+    public Page<Order> findAll(Pageable pageable);
 
     public List<OrderDetail> findByOrderId(Long id);
 

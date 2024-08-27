@@ -15,6 +15,9 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -54,14 +57,19 @@ public class UserController {
     @GetMapping("/admin/user")
     public String getUserPage(
             Model model,
+            @RequestParam(defaultValue = "1", name = "page") int page,
             HttpServletRequest request) {
         if (request.getParameter("message") != null) {
             Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
             model.addAttribute("messageResponse", message.get("message"));
             model.addAttribute("alert", message.get("alert"));
         }
-        List<User> users = this.userService.getAllUser();
+        Pageable pageable = PageRequest.of(page - 1, 10);
+        Page<User> pageUsers = this.userService.findAll(pageable);
+        List<User> users = pageUsers.getContent();
         model.addAttribute("users", users);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pageUsers.getTotalPages());
         return "admin/user/show";
     }
 

@@ -3,6 +3,8 @@ package com.huucuong.TimeHub.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.huucuong.TimeHub.domain.Cart;
@@ -35,8 +37,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> findAll() {
-        return this.productRepository.findAll();
+    public Page<Product> findAll(Pageable pageable) {
+        return this.productRepository.findAll(pageable);
     }
 
     @Override
