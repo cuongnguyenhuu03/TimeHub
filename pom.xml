@@ -90,6 +90,13 @@
 			<version>5.5.13.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>6.4.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 
 	</dependencies>
@@ -100,6 +107,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-compiler-plugin</artifactId>
+            	<version>3.11.0</version>
+            	<configuration>
+                	<source>17</source> <!-- Phiên bản JDK của mã nguồn -->
+                	<target>17</target> <!-- Phiên bản JDK của bytecode -->
+            	</configuration>
+        	</plugin>
 		</plugins>
 	</build>
 

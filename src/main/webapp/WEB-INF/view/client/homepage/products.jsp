@@ -101,31 +101,46 @@
                                                 <div class="col-12">
                                                     <div class="mb-2"><b>Price</b></div>
 
-                                                    <div class="form-check form-check-inline" style="width: 40%;">
+                                                    <div class="form-check form-check-inline" style="width: 90%;">
                                                         <input class="form-check-input" type="checkbox" id="price-2"
                                                             value="under-1000">
                                                         <label class="form-check-label" for="price-2">Under
                                                             1000$</label>
                                                     </div>
 
-                                                    <div class="form-check form-check-inline" style="width: 40%;">
+                                                    <div class="form-check form-check-inline" style="width: 90%;">
                                                         <input class="form-check-input" type="checkbox" id="price-3"
                                                             value="1000-1500-$">
-                                                        <label class="form-check-label" for="price-3">From 1000$ -
+                                                        <label class="form-check-label" for="price-3">From 1000 -
                                                             1500$</label>
                                                     </div>
 
-                                                    <div class="form-check form-check-inline" style="width: 40%;">
+                                                    <div class="form-check form-check-inline" style="width: 90%;">
                                                         <input class="form-check-input" type="checkbox" id="price-4"
                                                             value="1500-2000-$">
                                                         <label class="form-check-label" for="price-4">From 1500 -
                                                             2000$</label>
                                                     </div>
 
-                                                    <div class="form-check form-check-inline" style="width: 40%;">
+                                                    <div class="form-check form-check-inline" style="width: 90%;">
+                                                        <input class="form-check-input" type="checkbox" id="price-4"
+                                                            value="2000-2500-$">
+                                                        <label class="form-check-label" for="price-4">From 2000 -
+                                                            2500$</label>
+                                                    </div>
+
+                                                    <div class="form-check form-check-inline" style="width: 90%;">
+                                                        <input class="form-check-input" type="checkbox" id="price-4"
+                                                            value="2500-3000-$">
+                                                        <label class="form-check-label" for="price-4">From 2500 -
+                                                            3000$</label>
+                                                    </div>
+
+
+                                                    <div class="form-check form-check-inline" style="width: 90%;">
                                                         <input class="form-check-input" type="checkbox" id="price-5"
-                                                            value="over-2000-$">
-                                                        <label class="form-check-label" for="price-5">Over 2000$</label>
+                                                            value="over-3000-$">
+                                                        <label class="form-check-label" for="price-5">Over 3000$</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">

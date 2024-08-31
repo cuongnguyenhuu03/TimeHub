@@ -1,7 +1,5 @@
 package com.huucuong.TimeHub.service;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,6 +9,8 @@ import jakarta.servlet.http.HttpSession;
 
 public interface IProductService {
     public Page<Product> findAll(Pageable pageable);
+
+    public Page<Product> findAllWithSpec(Pageable pageable, String name);
 
     public Product save(Product product);
 

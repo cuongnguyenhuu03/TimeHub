@@ -6,11 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.huucuong.TimeHub.domain.Order;
 import com.huucuong.TimeHub.service.impl.BillService;
 import com.huucuong.TimeHub.service.impl.OrderService;
 import com.itextpdf.text.DocumentException;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BillController {

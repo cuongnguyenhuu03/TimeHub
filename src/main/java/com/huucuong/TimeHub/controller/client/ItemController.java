@@ -1,8 +1,9 @@
 package com.huucuong.TimeHub.controller.client;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import org.hibernate.mapping.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -62,11 +63,52 @@ public class ItemController {
     @GetMapping("/products")
     public String getProductPage(
             Model model,
+            @RequestParam("name") Optional<String> nameOptional,
+            @RequestParam("min-price") Optional<String> minPriceOptional,
+            @RequestParam("max-price") Optional<String> maxPriceOptional,
+            @RequestParam("origin") Optional<String> originOptional,
+            @RequestParam("category") Optional<String> categoryPriceOptional,
+            @RequestParam("price") Optional<String> priceOptional,
             @RequestParam(defaultValue = "1", name = "page") int page) {
 
-        Pageable pageable = PageRequest.of(page - 1, 6);
+        Pageable pageable = PageRequest.of(page - 1, 60);
 
-        Page<Product> pageProducts = this.productService.findAll(pageable);
+        String name = nameOptional.isPresent() ? nameOptional.get() : "";
+
+        // Case 1
+        // Double min = minPriceOptional.isPresent() ?
+        // Double.parseDouble(minPriceOptional.get()) : 0;
+        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
+        // min);
+
+        // Case 2
+        // Double max = maxPriceOptional.isPresent() ?
+        // Double.parseDouble(maxPriceOptional.get()) : 0;
+        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
+        // max);
+
+        // Case 3
+        String origin = originOptional.isPresent() ? originOptional.get() : "";
+        Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
+                origin);
+
+        // Case 4
+        // List<String> origin = Arrays.asList(originOptional.get().split(","));
+        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
+        // origin);
+
+        // Case 5
+        // String price = priceOptional.isPresent() ? priceOptional.get() : "";
+        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
+        // price);
+
+        // Case 6
+        // List<String> price = Arrays.asList(priceOptional.get().split(","));
+        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
+        // price);
+
+        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
+        // name);
         List<Product> listProducts = pageProducts.getContent();
         List<Category> categories = this.categoryService.findAll();
         model.addAttribute("products", listProducts);
