@@ -222,6 +222,90 @@
         return formatted;
     }
 
+    //handle filter products
+    $('#btnFilter').click(function (event) {
+        event.preventDefault();
+
+        let originArr = [];
+        let categoryArr = [];
+        let priceArr = [];
+        //origin filter
+        $("#originFilter .form-check-input:checked").each(function () {
+            originArr.push($(this).val());
+        });
+
+        //category filter
+        $("#categoryFilter .form-check-input:checked").each(function () {
+            categoryArr.push($(this).val());
+        });
+
+        //price filter
+        $("#priceFilter .form-check-input:checked").each(function () {
+            priceArr.push($(this).val());
+        });
+
+        //sort order
+        let sortValue = $('input[name="radio-sort"]:checked').val();
+
+        const currentUrl = new URL(window.location.href);
+        const searchParams = currentUrl.searchParams;
+
+        // Add or update query parameters
+        searchParams.set('page', '1');
+        searchParams.set('sort', sortValue);
+
+        searchParams.delete('origin')
+        searchParams.delete('category')
+        searchParams.delete('price')
+
+        if (originArr.length > 0) {
+            searchParams.set('origin', originArr.join(','));
+        }
+        if (categoryArr.length > 0) {
+            searchParams.set('category', categoryArr.join(','));
+        }
+        if (priceArr.length > 0) {
+            searchParams.set('price', priceArr.join(','));
+        }
+
+        // Update the URL and reload the page
+        window.location.href = currentUrl.toString();
+    });
+
+    //handle auto checkbox after page loading
+    // Parse the URL parameters
+    const params = new URLSearchParams(window.location.search);
+
+    // Set checkboxes for 'origin'
+    if (params.has('origin')) {
+        const factories = params.get('origin').split(',');
+        factories.forEach(origin => {
+            $(`#originFilter .form-check-input[value="${origin}"]`).prop('checked', true);
+        });
+    }
+
+    // Set checkboxes for 'category'
+    if (params.has('category')) {
+        const categorys = params.get('category').split(',');
+        categorys.forEach(category => {
+            $(`#categoryFilter .form-check-input[value="${category}"]`).prop('checked', true);
+        });
+    }
+
+    // Set checkboxes for 'price'
+    if (params.has('price')) {
+        const prices = params.get('price').split(',');
+        prices.forEach(price => {
+            $(`#priceFilter .form-check-input[value="${price}"]`).prop('checked', true);
+        });
+    }
+
+    // Set radio buttons for 'sort'
+    if (params.has('sort')) {
+        const sort = params.get('sort');
+        $(`input[type="radio"][name="radio-sort"][value="${sort}"]`).prop('checked', true);
+    }
+
 })(jQuery);
 
 

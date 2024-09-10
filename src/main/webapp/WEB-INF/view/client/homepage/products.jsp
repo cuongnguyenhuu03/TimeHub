@@ -60,7 +60,7 @@
                                             <h5>Filter Product</h5>
 
                                             <div class="row g-4">
-                                                <div class="col-12">
+                                                <div class="col-12" id="originFilter">
                                                     <div class="mb-2"><b>Origin</b></div>
                                                     <div class="form-check form-check-inline" style="width: 40%;">
                                                         <input class="form-check-input" type="checkbox" id="factory-1"
@@ -86,7 +86,7 @@
                                                         <label class="form-check-label" for="factory-4">Japan</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-12">
+                                                <div class="col-12" id="categoryFilter">
                                                     <div class="mb-2"><b>Category</b></div>
 
                                                     <c:forEach items="${categories}" var="category">
@@ -98,12 +98,12 @@
                                                         </div>
                                                     </c:forEach>
                                                 </div>
-                                                <div class="col-12">
+                                                <div class="col-12" id="priceFilter">
                                                     <div class="mb-2"><b>Price</b></div>
 
                                                     <div class="form-check form-check-inline" style="width: 90%;">
                                                         <input class="form-check-input" type="checkbox" id="price-2"
-                                                            value="under-1000">
+                                                            value="under-1000-$">
                                                         <label class="form-check-label" for="price-2">Under
                                                             1000$</label>
                                                     </div>
@@ -161,14 +161,14 @@
                                                     </div>
 
                                                     <div class="form-check form-check-inline" style="width: 40%;">
-                                                        <input class="form-check-input" type="radio" id="sort-3"
+                                                        <input class="form-check-input" type="radio" id="sort-3" checked
                                                             value="No order" name="radio-sort">
                                                         <label class="form-check-label" for="sort-3">No order</label>
                                                     </div>
 
                                                 </div>
                                                 <div class="col-12">
-                                                    <button
+                                                    <button id="btnFilter"
                                                         class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4">
                                                         Filter products
                                                     </button>
@@ -231,18 +231,18 @@
                                             <div class="col-12">
                                                 <div
                                                     class="pagination d-flex justify-content-center align-items-center mt-5">
-                                                    <a href="/products?page=${currentPage - 1}"
+                                                    <a href="/products?page=${currentPage - 1}${queryString}"
                                                         class="rounded  ${1 eq currentPage ? 'd-none' : ''}  ">&laquo;</a>
 
                                                     <c:forEach begin="1" end="${totalPages}" varStatus="loop">
                                                         <li class="page-item">
                                                             <a class="${(loop.index) eq currentPage ? 'active rounded' : 'rounded'}"
-                                                                href="/products?page=${loop.index}">
+                                                                href="/products?page=${loop.index}${queryString}">
                                                                 ${loop.index}
                                                             </a>
                                                         </li>
                                                     </c:forEach>
-                                                    <a href="#"
+                                                    <a href="/products?page=${currentPage + 1}${queryString}"
                                                         class="rounded ${totalPages eq currentPage ? 'd-none' : ''}  ">&raquo;</a>
                                                 </div>
                                             </div>

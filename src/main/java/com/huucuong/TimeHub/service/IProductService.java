@@ -4,13 +4,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.huucuong.TimeHub.domain.Product;
+import com.huucuong.TimeHub.domain.dto.ProductCriteriaDTO;
 
 import jakarta.servlet.http.HttpSession;
 
 public interface IProductService {
     public Page<Product> findAll(Pageable pageable);
 
-    public Page<Product> findAllWithSpec(Pageable pageable, String name);
+    public Page<Product> findAllWithSpec(Pageable pageable, ProductCriteriaDTO productCriteriaDTO);
 
     public Product save(Product product);
 

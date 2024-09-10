@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.huucuong.TimeHub.domain.Category;
 import com.huucuong.TimeHub.domain.Product;
 import com.huucuong.TimeHub.domain.Product_;
 
@@ -28,6 +29,10 @@ public class ProductSpecs {
 
     public static Specification<Product> originListMatch(List<String> origin) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.ORIGIN)).value(origin);
+    }
+
+    public static Specification<Product> categoryListMatch(List<Category> category) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.CATEGORY)).value(category);
     }
 
     public static Specification<Product> matchPrice(double min, double max) {

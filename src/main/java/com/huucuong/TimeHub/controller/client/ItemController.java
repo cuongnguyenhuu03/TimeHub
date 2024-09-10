@@ -7,12 +7,14 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.huucuong.TimeHub.domain.*;
+import com.huucuong.TimeHub.domain.dto.ProductCriteriaDTO;
 import com.huucuong.TimeHub.service.impl.CategoryService;
 import com.huucuong.TimeHub.service.impl.ProductImageService;
 import com.huucuong.TimeHub.service.impl.ProductService;
@@ -62,59 +64,36 @@ public class ItemController {
 
     @GetMapping("/products")
     public String getProductPage(
+            HttpServletRequest request,
             Model model,
-            @RequestParam("name") Optional<String> nameOptional,
-            @RequestParam("min-price") Optional<String> minPriceOptional,
-            @RequestParam("max-price") Optional<String> maxPriceOptional,
-            @RequestParam("origin") Optional<String> originOptional,
-            @RequestParam("category") Optional<String> categoryPriceOptional,
-            @RequestParam("price") Optional<String> priceOptional,
+            ProductCriteriaDTO productCriteriaDTO,
             @RequestParam(defaultValue = "1", name = "page") int page) {
 
-        Pageable pageable = PageRequest.of(page - 1, 60);
+        Pageable pageable = PageRequest.of(page - 1, 6);
+        if (productCriteriaDTO.getSort() != null && productCriteriaDTO.getSort().isPresent()) {
+            String sort = productCriteriaDTO.getSort().get();
+            if (sort.equals("price-ascending")) {
+                pageable = PageRequest.of(page - 1, 6, Sort.by(Product_.PRICE).ascending());
+            } else if (sort.equals("price-descending")) {
+                pageable = PageRequest.of(page - 1, 6, Sort.by(Product_.PRICE).descending());
+            }
+        }
 
-        String name = nameOptional.isPresent() ? nameOptional.get() : "";
-
-        // Case 1
-        // Double min = minPriceOptional.isPresent() ?
-        // Double.parseDouble(minPriceOptional.get()) : 0;
-        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
-        // min);
-
-        // Case 2
-        // Double max = maxPriceOptional.isPresent() ?
-        // Double.parseDouble(maxPriceOptional.get()) : 0;
-        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
-        // max);
-
-        // Case 3
-        String origin = originOptional.isPresent() ? originOptional.get() : "";
-        Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
-                origin);
-
-        // Case 4
-        // List<String> origin = Arrays.asList(originOptional.get().split(","));
-        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
-        // origin);
-
-        // Case 5
-        // String price = priceOptional.isPresent() ? priceOptional.get() : "";
-        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
-        // price);
-
-        // Case 6
-        // List<String> price = Arrays.asList(priceOptional.get().split(","));
-        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
-        // price);
-
-        // Page<Product> pageProducts = this.productService.findAllWithSpec(pageable,
-        // name);
+        Page<Product> pageProducts = this.productService.findAllWithSpec(pageable, productCriteriaDTO);
+        // Page<Product> pageProducts = this.productService.findAll(pageable);
         List<Product> listProducts = pageProducts.getContent();
         List<Category> categories = this.categoryService.findAll();
+
+        String queryString = request.getQueryString();
+        if (queryString != null || queryString.isBlank()) {
+            queryString = queryString.replace("page=" + page, "");
+        }
+
         model.addAttribute("products", listProducts);
         model.addAttribute("categories", categories);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", pageProducts.getTotalPages());
+        model.addAttribute("queryString", queryString);
         return "client/homepage/products";
     }
 }
